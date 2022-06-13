@@ -1,0 +1,79 @@
+global:
+  scrape_interval: 15s # By default, scrape targets every 15 seconds.
+  evaluation_interval: 15s # By default, scrape targets every 15 seconds.
+  # scrape_timeout is set to the global default (10s).
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+#   external_labels:
+#     monitor: 'example'
+#
+# # Alertmanager configuration
+# alerting:
+#   alertmanagers:
+#     - static_configs:
+#         - targets:
+#             - localhost:9093
+
+# Load and evaluate rules in this file every 'evaluation_interval' seconds.
+rule_files:
+  - 'rules.yml'
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # - job_name: 'JMX_Expoter'
+  #   scrape_interval: 15s
+  #   static_configs:
+  #     - targets: ['localhost:7077']
+
+  # - job_name: 'cAdvisor'
+  #   scrape_interval: 5s
+  #   static_configs:
+  #     - targets: ['localhost:5601']
+#
+  # - job_name: 'spring-boot-angular-jboss'
+  #   metrics_path: 'springboot2-jpa-crud-example-0.0.1-SNAPSHOT/actuator/prometheus'
+  #   scrape_interval: 15s
+  #   static_configs:
+  #     - targets: ['localhost:8000']
+
+  - job_name: 'setel_job'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['172.104.64.163:9100', '172.22.0.2:9100']
+    
+      
+  - job_name: 'setel_job1'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['localhost:9100', '172.22.0.2:9100']
+      
+  - job_name: 'TUYENNX'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['172.104.64.163:9100']
+        labels:
+          group: 'production'
+      - targets: [ '172.22.0.2:9100']
+        labels:
+          group: 'production1'
+
+  - job_name: 'TUYENNX1'
+    scrape_interval: 10s
+    static_configs:
+      - targets:
+        - 172.104.64.163:9100
+        labels:
+          name: 'sever1111'
+      
+
+      #['172.22.0.2:9100', '172.22.0.3:9101', '172.22.0.4:9102']
+      #- targets: ['172.22.0.3:9101', '172.22.0.4:9102']
+      

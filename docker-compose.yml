@@ -1,0 +1,27 @@
+version: '2'
+services:
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - '9090:9090'
+    container_name: prometheus
+    restart: always
+    network_mode: host
+    volumes:
+      - './DATA/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml'
+      - ./DATA/prometheus/prometheus/:/etc/prometheus/
+      - ./DATA/prometheus/prometheus_data:/prometheus
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - '3000:3000'
+    container_name: grafana
+    restart: always
+    network_mode: host
+    depends_on:
+      - prometheus
+    volumes:
+      - './DATA/grafana/grafana.ini:/etc/grafana/grafana.ini'
+      - './DATA/grafana/grafana-data:/var/lib/grafana'
+      - ./DATA/grafana/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./DATA/grafana/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
